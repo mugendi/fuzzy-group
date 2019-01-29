@@ -17,5 +17,14 @@
   "dependencies": {
     "fuzzy": "^0.1.3",
     "lodash": "^4.17.11"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mugendi/fuzzy-group.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mugendi/fuzzy-group/issues"
+  },
+  "homepage": "https://github.com/mugendi/fuzzy-group#readme"
 }

@@ -4,21 +4,26 @@ const fuzzy = require("fuzzy"),
   _each = require("lodash/each"),
   _uniq = require("lodash/uniq"),
   _lCase = require("lodash/lowerCase"),
-  _map = require('lodash/map'),
-  _countBy = require('lodash/countBy'),
-  _orderBy = require('lodash/orderBy'),
-  _filter = require('lodash/filter'),
-  _groupBy = require('lodash/groupBy'),
-  _first = require('lodash/first'),
-  _flatten = require('lodash/first'),
-  _compact = require('lodash/compact'),
-  _intersection = require('lodash/intersection');
+  _map = require("lodash/map"),
+  _countBy = require("lodash/countBy"),
+  _orderBy = require("lodash/orderBy"),
+  _filter = require("lodash/filter"),
+  _groupBy = require("lodash/groupBy"),
+  _first = require("lodash/first"),
+  _flatten = require("lodash/first"),
+  _compact = require("lodash/compact"),
+  _intersection = require("lodash/intersection"),
+  _difference = require('lodash/difference');
+
+const stopwords = ['the']
 
 function u_words(s) {
+
   return _uniq(
     _lCase(s)
       .replace(/[^a-z0-9\s\-']/gi, "")
       .split(/\s+/)
+      // .filter(w=>stopwords.lastIndexOf(w)===-1)
   );
 }
 
@@ -28,7 +33,9 @@ function fuzzyGroup(list, opts) {
     w,
     r,
     m,
-    intersection;
+    intersection,
+    threshold;
+
   var threshold = 0.5;
   var tList = {};
 
@@ -76,7 +83,6 @@ function fuzzyGroup(list, opts) {
     //console.log(g)
     //only keep similar
     g[a].res = _filter(g[a].res, o => o.similarity > threshold);
-    
   });
   //console.log(g)
 
@@ -118,10 +124,9 @@ function fuzzyGroup(list, opts) {
         //ue other threshold s
         if (b) {
           intersection = _intersection(b.list.unique, a.list.unique);
-          if (
-            i < j &&
-            intersection.length / b.list.unique.length >= threshold
-          ) {
+          similarity = intersection.length / b.list.unique.length ;
+        
+          if (i < j && similarity > threshold) {
             //delete collapsed group
             delete g[j];
           }
