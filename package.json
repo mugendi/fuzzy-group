@@ -1,6 +1,6 @@
 {
   "name": "fuzzy-group",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Group strings based on their 'fuzzy' similarity. ",
   "main": "index.js",
   "scripts": {
