@@ -1,0 +1,21 @@
+{
+  "name": "fuzzy-group",
+  "version": "1.0.0",
+  "description": "Group strings based on their 'fuzzy' similarity. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fuzzy",
+    "group",
+    "array",
+    "strings"
+  ],
+  "author": "Anthony Mugendi <ngurumugz@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "fuzzy": "^0.1.3",
+    "lodash": "^4.17.11"
+  }
+}
