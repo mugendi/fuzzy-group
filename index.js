@@ -1,6 +1,5 @@
 //only uniq
-const fuzzy = require("fuzzy"),
-  crypto = require("crypto"),
+const crypto = require("crypto"),
   _each = require("lodash/each"),
   _uniq = require("lodash/uniq"),
   _lCase = require("lodash/lowerCase"),
@@ -15,17 +14,6 @@ const fuzzy = require("fuzzy"),
   _intersection = require("lodash/intersection"),
   _difference = require('lodash/difference');
 
-const stopwords = ['the']
-
-function u_words(s) {
-
-  return _uniq(
-    _lCase(s)
-      .replace(/[^a-z0-9\s\-']/gi, "")
-      .split(/\s+/)
-      // .filter(w=>stopwords.lastIndexOf(w)===-1)
-  );
-}
 
 function fuzzyGroup(list, opts) {
   var g = {},
@@ -65,10 +53,7 @@ function fuzzyGroup(list, opts) {
 
     //fuzzy search and add matches
     w.map(n => {
-      r = fuzzy.filter(n, tListKeys);
-      m = r.map(function(el) {
-        return el.string;
-      });
+      m = fuzzyFilter(n, tListKeys);
       g[a].res = g[a].res.concat(m);
     });
 
@@ -146,6 +131,23 @@ function fuzzyGroup(list, opts) {
   });
 
   return _compact(g);
+}
+
+function u_words(s) {
+  return _uniq(
+    _lCase(s)
+      .replace(/[^a-z0-9\s\-']/gi, "")
+      .split(/\s+/)
+  );
+}
+
+
+function fuzzyFilter(n, list){
+  var pat = new RegExp(`\\b${n}\\b`, 'i');
+  return list.filter(s=> {
+    // console.log(s, pat, pat.test(s));
+    return pat.test(s)
+  })
 }
 
 module.exports = fuzzyGroup;
